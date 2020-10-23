@@ -60,4 +60,8 @@ class Routes {
   Future<dynamic> detailsAdmin() {
     return navigator.pushNamed("/detailsAdmin");
   }
+
+  Future<dynamic> detailsStudent() {
+    return navigator.pushNamed("/detailsStudent");
+  }
 }

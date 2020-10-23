@@ -8,6 +8,7 @@ import 'package:new_prototype/models/student_model.dart';
 import 'package:new_prototype/views/admin/add_admin.dart';
 import 'package:new_prototype/views/admin/add_student.dart';
 import 'package:new_prototype/views/admin/details_admin.dart';
+import 'package:new_prototype/views/admin/details_student.dart';
 import 'package:new_prototype/views/admin/home_admin.dart';
 import 'package:new_prototype/views/admin/list_admins.dart';
 import 'package:new_prototype/views/admin/list_students.dart';
@@ -39,7 +40,8 @@ void main() {
           GetPage(name: "/addStudent", page: () => AddStudent()),
           GetPage(name: "/listAdmins", page: () => ListAdmins()),
           GetPage(name: "/listStudents", page: () => ListStudents()),
-          GetPage(name: "/detailsAdmin", page: () => DetailsAdmin())
+          GetPage(name: "/detailsAdmin", page: () => DetailsAdmin()),
+          GetPage(name: "/detailsStudent", page: () => DetailsStudent())
         ],
       ),
     ),

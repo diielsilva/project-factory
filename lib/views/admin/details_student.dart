@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:new_prototype/models/admin_model.dart';
+import 'package:new_prototype/models/student_model.dart';
 import 'package:provider/provider.dart';
 
-class DetailsAdmin extends StatefulWidget {
+class DetailsStudent extends StatefulWidget {
   @override
-  _DetailsAdminState createState() => _DetailsAdminState();
+  _DetailsStudentState createState() => _DetailsStudentState();
 }
 
-class _DetailsAdminState extends State<DetailsAdmin> {
-  AdminModel _adminModel;
+class _DetailsStudentState extends State<DetailsStudent> {
+  StudentModel _studentModel = StudentModel();
 
   @override
   void initState() {
     super.initState();
-    setAdmin();
+    setStudentModel();
   }
 
   @override
@@ -27,7 +27,7 @@ class _DetailsAdminState extends State<DetailsAdmin> {
 
   Widget headerOfScaffold() {
     return AppBar(
-      title: Text("Detalhes do Admin"),
+      title: Text("Detalhes do Aluno"),
       centerTitle: true,
     );
   }
@@ -61,7 +61,7 @@ class _DetailsAdminState extends State<DetailsAdmin> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text("Usuário: ", style: TextStyle(fontWeight: FontWeight.bold)),
-          Flexible(child: Text(_adminModel.getUsername()))
+          Flexible(child: Text(_studentModel.getUsername()))
         ],
       ),
     );
@@ -74,7 +74,7 @@ class _DetailsAdminState extends State<DetailsAdmin> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text("Nome: ", style: TextStyle(fontWeight: FontWeight.bold)),
-          Flexible(child: Text(_adminModel.getName()))
+          Flexible(child: Text(_studentModel.getName()))
         ],
       ),
     );
@@ -106,7 +106,7 @@ class _DetailsAdminState extends State<DetailsAdmin> {
     );
   }
 
-  void setAdmin() {
-    _adminModel = Provider.of<AdminModel>(context, listen: false);
+  void setStudentModel() {
+    _studentModel = Provider.of<StudentModel>(context, listen: false);
   }
 }

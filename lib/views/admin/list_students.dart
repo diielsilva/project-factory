@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:new_prototype/controllers/admin_controller.dart';
+import 'package:new_prototype/models/student_model.dart';
+import 'package:new_prototype/routes/routes.dart';
+import 'package:provider/provider.dart';
 
 class ListStudents extends StatefulWidget {
   @override
@@ -86,7 +89,13 @@ class _ListStudentsState extends State<ListStudents> {
                 backgroundColor: Colors.deepOrange,
                 child: FaIcon(FontAwesomeIcons.solidUser, color: Colors.white)),
             trailing: FaIcon(FontAwesomeIcons.angleRight),
-            onTap: () {},
+            onTap: () {
+              StudentModel _studentModel =
+                  Provider.of<StudentModel>(context, listen: false);
+              _studentModel.setUsername(documents[index].get("username"));
+              _studentModel.setName(documents[index].get("name"));
+              Routes().detailsStudent();
+            },
           );
         });
   }

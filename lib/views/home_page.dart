@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget headerOfColumn() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(10, 50, 10, 50),
+      padding: EdgeInsets.fromLTRB(10, 60, 10, 60),
       child: Image.asset("images/logo_app.png"),
     );
   }
