@@ -149,6 +149,10 @@ class _ListStudentsState extends State<ListStudents> {
       StudentModel _studentModel =
           Provider.of<StudentModel>(context, listen: false);
       _studentModel.setName(_searchController.text);
+      setState(() {
+        _searchController.text = "";
+      });
+      Routes().searchStudents();
     }
   }
 
