@@ -95,6 +95,11 @@ class AdminController extends ChangeNotifier {
 
   Stream<QuerySnapshot> searchAdmins(String searchText) {
     _database = _adminModel.getConnection();
-    return _database.where("keyWords", arrayContains: searchText).snapshots();
+    return _database.where("keyWords", arrayContains: searchText.toLowerCase()).snapshots();
+  }
+
+  Stream<QuerySnapshot> searchStudents(String searchText) {
+    _database = _studentModel.getConnection();
+    return _database.where("keyWords", arrayContains: searchText.toLowerCase()).snapshots();
   }
 }

@@ -227,14 +227,12 @@ class _AddAdminState extends State<AddAdmin> {
           content: Text("Insira ao Menos Três Caracteres por Campo"),
           actions: [
             FlatButton(
-              child: FlatButton(
-                child: Text("Confirmar"),
-                textColor: Colors.blue,
-                onPressed: () {
-                  Routes().backOneRoute(true);
-                },
-              ),
-            )
+              child: Text("Confirmar"),
+              textColor: Colors.blue,
+              onPressed: () {
+                Routes().backOneRoute(true);
+              },
+            ),
           ],
         ));
   }

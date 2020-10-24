@@ -106,6 +106,28 @@ class _DetailsStudentState extends State<DetailsStudent> {
     );
   }
 
+  Future<bool> confirmRemotion() {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        child: AlertDialog(
+          title: Text("Confirmar Remoção"),
+          content: Text("Deseja Mesmo Remover o Usuário?"),
+          actions: [
+            FlatButton(
+              child: Text("Confirmar"),
+              textColor: Colors.blue,
+              onPressed: () {},
+            ),
+            FlatButton(
+              child: Text("Cancelar"),
+              textColor: Colors.red,
+              onPressed: () {},
+            )
+          ],
+        ));
+  }
+
   void setStudentModel() {
     _studentModel = Provider.of<StudentModel>(context, listen: false);
   }

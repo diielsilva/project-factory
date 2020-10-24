@@ -49,9 +49,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget headerOfColumn() {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(10, 60, 10, 60),
-      child: Image.asset("images/logo_app.png"),
+    return SizedBox(
+      width: 270,
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(10, 60, 10, 60),
+        child: Image.asset("images/logo_app.png"),
+      ),
     );
   }
 

@@ -12,6 +12,7 @@ import 'package:new_prototype/views/admin/details_student.dart';
 import 'package:new_prototype/views/admin/home_admin.dart';
 import 'package:new_prototype/views/admin/list_admins.dart';
 import 'package:new_prototype/views/admin/list_students.dart';
+import 'package:new_prototype/views/admin/result_search_admin.dart';
 import 'package:new_prototype/views/home_page.dart';
 import 'package:new_prototype/views/student/home_student.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,8 @@ void main() {
           GetPage(name: "/listAdmins", page: () => ListAdmins()),
           GetPage(name: "/listStudents", page: () => ListStudents()),
           GetPage(name: "/detailsAdmin", page: () => DetailsAdmin()),
-          GetPage(name: "/detailsStudent", page: () => DetailsStudent())
+          GetPage(name: "/detailsStudent", page: () => DetailsStudent()),
+          GetPage(name: "/searchAdmins", page: () => ResultSearchAdmins())
         ],
       ),
     ),

@@ -50,7 +50,9 @@ class _ListStudentsState extends State<ListStudents> {
             ),
             IconButton(
               icon: FaIcon(FontAwesomeIcons.search),
-              onPressed: () {},
+              onPressed: () {
+                validateForm();
+              },
             )
           ],
         ),
@@ -98,6 +100,56 @@ class _ListStudentsState extends State<ListStudents> {
             },
           );
         });
+  }
+
+  Future<bool> errorEmptyFields() {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        child: AlertDialog(
+          title: Text("Erro na Pesquisa"),
+          content: Text("Preencha Todos os Campos Corretamente"),
+          actions: [
+            FlatButton(
+              child: Text("Confirmar"),
+              textColor: Colors.blue,
+              onPressed: () {
+                Routes().backOneRoute(true);
+              },
+            ),
+          ],
+        ));
+  }
+
+  Future<bool> errorInsufficientSize() {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        child: AlertDialog(
+          title: Text("Erro na Pesquisa"),
+          content: Text("Insira ao Menos Três Caracteres por Campo"),
+          actions: [
+            FlatButton(
+              child: Text("Confirmar"),
+              textColor: Colors.blue,
+              onPressed: () {
+                Routes().backOneRoute(true);
+              },
+            )
+          ],
+        ));
+  }
+
+  void validateForm() {
+    if (_searchController.text.isEmpty) {
+      errorEmptyFields();
+    } else if (_searchController.text.length < 3) {
+      errorInsufficientSize();
+    } else {
+      StudentModel _studentModel =
+          Provider.of<StudentModel>(context, listen: false);
+      _studentModel.setName(_searchController.text);
+    }
   }
 
   void setStream() {

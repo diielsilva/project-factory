@@ -50,7 +50,9 @@ class _ListAdminsState extends State<ListAdmins> {
           ),
           IconButton(
             icon: FaIcon(FontAwesomeIcons.search),
-            onPressed: () {},
+            onPressed: () {
+              validateForm();
+            },
           )
         ],
       ),
@@ -91,6 +93,61 @@ class _ListAdminsState extends State<ListAdmins> {
             },
           );
         });
+  }
+
+  void validateForm() {
+    if(_searchController.text.isEmpty) {
+      errorEmptyFields();
+    }
+    else if(_searchController.text.length < 3) {
+      errorInsufficientSize();
+    }
+    else{
+      AdminModel _adminModel = Provider.of<AdminModel>(context, listen: false);
+      _adminModel.setName(_searchController.text);
+      setState(() {
+        _searchController.text = "";
+      });
+      Routes().searchAdmins();
+    }
+  }
+
+  Future<bool> errorEmptyFields() {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        child: AlertDialog(
+          title: Text("Erro na Pesquisa"),
+          content: Text("Preencha Todos os Campos Corretamente"),
+          actions: [
+            FlatButton(
+              child: Text("Confirmar"),
+              textColor: Colors.blue,
+              onPressed: () {
+                Routes().backOneRoute(true);
+              },
+            ),
+          ],
+        ));
+  }
+
+  Future<bool> errorInsufficientSize() {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        child: AlertDialog(
+          title: Text("Erro na Pesquisa"),
+          content: Text("Insira ao Menos Três Caracteres por Campo"),
+          actions: [
+            FlatButton(
+              child: Text("Confirmar"),
+              textColor: Colors.blue,
+              onPressed: () {
+                Routes().backOneRoute(true);
+              },
+            )
+          ],
+        ));
   }
 
   void setStream() {
