@@ -72,4 +72,21 @@ class Routes {
   Future<dynamic> searchStudents() {
     return navigator.pushNamed("/searchStudents");
   }
+
+  Future<dynamic> perfilAdmin() {
+    return navigator.pushNamed("/perfilAdmin");
+  }
+
+  Future<dynamic> editAdmin() {
+    return navigator.pushNamed("/editAdmin");
+  }
+
+  Future<dynamic> successEditionAdmin() async {
+    return navigator.popUntil(ModalRoute.withName("/perfilAdmin"));
+  }
+
+  Future<dynamic> successRemoveAdmin() async {
+    return navigator.popUntil(ModalRoute.withName("/listAdmins"));
+  }
+
 }

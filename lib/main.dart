@@ -9,9 +9,11 @@ import 'package:new_prototype/views/admin/add_admin.dart';
 import 'package:new_prototype/views/admin/add_student.dart';
 import 'package:new_prototype/views/admin/details_admin.dart';
 import 'package:new_prototype/views/admin/details_student.dart';
+import 'package:new_prototype/views/admin/edit_admin.dart';
 import 'package:new_prototype/views/admin/home_admin.dart';
 import 'package:new_prototype/views/admin/list_admins.dart';
 import 'package:new_prototype/views/admin/list_students.dart';
+import 'package:new_prototype/views/admin/perfil_admin.dart';
 import 'package:new_prototype/views/admin/result_search_admin.dart';
 import 'package:new_prototype/views/admin/result_search_student.dart';
 import 'package:new_prototype/views/home_page.dart';
@@ -45,7 +47,9 @@ void main() {
           GetPage(name: "/detailsAdmin", page: () => DetailsAdmin()),
           GetPage(name: "/detailsStudent", page: () => DetailsStudent()),
           GetPage(name: "/searchAdmins", page: () => ResultSearchAdmins()),
-          GetPage(name: "/searchStudents", page: () => ResultSearchStudents())
+          GetPage(name: "/searchStudents", page: () => ResultSearchStudents()),
+          GetPage(name: "/perfilAdmin", page: () => PerfilAdmin()),
+          GetPage(name: "/editAdmin", page: () => EditAdmin())
         ],
       ),
     ),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:new_prototype/models/admin_model.dart';
+import 'package:new_prototype/models/sheet_model.dart';
 import 'package:new_prototype/models/student_model.dart';
 
 class AdminController extends ChangeNotifier {
@@ -9,9 +10,13 @@ class AdminController extends ChangeNotifier {
   CollectionReference _database;
   String _resultInsertion;
   String _idUser;
+  String _idSheet;
   int _validateIfUserExists;
   QuerySnapshot _querySnapshot;
   List<String> _keyWords = [];
+  SheetModel _sheetModel = SheetModel();
+  bool _isAdminOnline;
+  bool _isStudentOnline;
 
   Future<String> addAdmin(String username, String password, String name) async {
     _validateIfUserExists = await verifyIfUserExists(username, "admin");
@@ -95,11 +100,76 @@ class AdminController extends ChangeNotifier {
 
   Stream<QuerySnapshot> searchAdmins(String searchText) {
     _database = _adminModel.getConnection();
-    return _database.where("keyWords", arrayContains: searchText.toLowerCase()).snapshots();
+    return _database
+        .where("keyWords", arrayContains: searchText.toLowerCase())
+        .snapshots();
   }
 
   Stream<QuerySnapshot> searchStudents(String searchText) {
     _database = _studentModel.getConnection();
-    return _database.where("keyWords", arrayContains: searchText.toLowerCase()).snapshots();
+    return _database
+        .where("keyWords", arrayContains: searchText.toLowerCase())
+        .snapshots();
+  }
+
+  Stream<QuerySnapshot> perfilAdmin(String username) {
+    _database = _adminModel.getConnection();
+    return _database.where("username", isEqualTo: username).snapshots();
+  }
+
+  Future<int> editAdmin(String username, String password, String name) async {
+    _database = _adminModel.getConnection();
+    if (password.isNotEmpty && password.length < 3 ||
+        name.isNotEmpty && name.length < 3) {
+      return 0;
+    } else {
+      _querySnapshot =
+          await _database.where("username", isEqualTo: username).get();
+      if (password.isEmpty && name.isNotEmpty) {
+        _querySnapshot.docs.forEach((element) {
+          _idUser = element.id;
+        });
+        await _database.doc(_idUser).update({"name": name});
+        return 1;
+      } else if (password.isNotEmpty && name.isEmpty) {
+        _querySnapshot.docs.forEach((element) {
+          _idUser = element.id;
+        });
+        await _database.doc(_idUser).update({"password": password});
+        return 1;
+      } else {
+        _querySnapshot.docs.forEach((element) {
+          _idUser = element.id;
+        });
+        await _database
+            .doc(_idUser)
+            .update({"password": password, "name": name});
+        return 1;
+      }
+    }
+  }
+
+  Future<int> removeAdmin(String username) async {
+    _database = _adminModel.getConnection();
+    _querySnapshot =
+        await _database.where("username", isEqualTo: username).get();
+    _querySnapshot.docs.forEach((element) {
+      _isAdminOnline = element.get("online");
+      _idUser = element.id;
+    });
+    if (_isAdminOnline == true) {
+      return -1;
+    } else {
+      _database = _sheetModel.getConnection();
+      _querySnapshot =
+          await _database.where("sheetBy", isEqualTo: username).get();
+      if (_querySnapshot.size > 0) {
+        return 0;
+      } else {
+        _database = _adminModel.getConnection();
+        await _database.doc(_idUser).delete();
+        return 1;
+      }
+    }
   }
 }
