@@ -89,4 +89,8 @@ class Routes {
     return navigator.popUntil(ModalRoute.withName("/listAdmins"));
   }
 
+  Future<dynamic> successRemoveStudent() async {
+    return navigator.popUntil(ModalRoute.withName("/listStudents"));
+  }
+
 }

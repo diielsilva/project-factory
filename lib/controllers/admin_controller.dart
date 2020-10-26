@@ -172,4 +172,34 @@ class AdminController extends ChangeNotifier {
       }
     }
   }
+
+  Future<int> removeStudent(String username) async {
+    _database = _studentModel.getConnection();
+    _querySnapshot =
+        await _database.where("username", isEqualTo: username).get();
+    _querySnapshot.docs.forEach((element) {
+      _idUser = element.id;
+      _isStudentOnline = element.get("online");
+    });
+    if (_isStudentOnline == true) {
+      return -1;
+    } else {
+      _database = _sheetModel.getConnection();
+      _querySnapshot =
+          await _database.where("studentUsername", isEqualTo: username).get();
+      if (_querySnapshot.size > 0) {
+        _querySnapshot.docs.forEach((element) {
+          _idSheet = element.id;
+        });
+        await _database.doc(_idSheet).delete();
+        _database = _studentModel.getConnection();
+        await _database.doc(_idUser).delete();
+        return 0;
+      } else {
+        _database = _studentModel.getConnection();
+        await _database.doc(_idUser).delete();
+        return 1;
+      }
+    }
+  }
 }
