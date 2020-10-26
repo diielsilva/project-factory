@@ -13,6 +13,7 @@ import 'package:new_prototype/views/admin/edit_admin.dart';
 import 'package:new_prototype/views/admin/home_admin.dart';
 import 'package:new_prototype/views/admin/list_admins.dart';
 import 'package:new_prototype/views/admin/list_students.dart';
+import 'package:new_prototype/views/admin/my_sheets.dart';
 import 'package:new_prototype/views/admin/perfil_admin.dart';
 import 'package:new_prototype/views/admin/result_search_admin.dart';
 import 'package:new_prototype/views/admin/result_search_student.dart';
@@ -49,7 +50,8 @@ void main() {
           GetPage(name: "/searchAdmins", page: () => ResultSearchAdmins()),
           GetPage(name: "/searchStudents", page: () => ResultSearchStudents()),
           GetPage(name: "/perfilAdmin", page: () => PerfilAdmin()),
-          GetPage(name: "/editAdmin", page: () => EditAdmin())
+          GetPage(name: "/editAdmin", page: () => EditAdmin()),
+          GetPage(name: "/mySheets", page: () => MySheets())
         ],
       ),
     ),

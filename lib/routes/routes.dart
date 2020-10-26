@@ -93,4 +93,7 @@ class Routes {
     return navigator.popUntil(ModalRoute.withName("/listStudents"));
   }
 
+  Future<dynamic> mySheets() {
+    return navigator.pushNamed("/mySheets");
+  }
 }

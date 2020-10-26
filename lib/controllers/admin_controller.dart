@@ -47,12 +47,12 @@ class AdminController extends ChangeNotifier {
     if (typeOfUser == "admin") {
       _database = _adminModel.getConnection();
       _querySnapshot =
-          await _database.where("username", isEqualTo: username).get();
+      await _database.where("username", isEqualTo: username).get();
       return _querySnapshot.size;
     } else {
       _database = _studentModel.getConnection();
       _querySnapshot =
-          await _database.where("username", isEqualTo: username).get();
+      await _database.where("username", isEqualTo: username).get();
       return _querySnapshot.size;
     }
   }
@@ -124,7 +124,7 @@ class AdminController extends ChangeNotifier {
       return 0;
     } else {
       _querySnapshot =
-          await _database.where("username", isEqualTo: username).get();
+      await _database.where("username", isEqualTo: username).get();
       if (password.isEmpty && name.isNotEmpty) {
         _querySnapshot.docs.forEach((element) {
           _idUser = element.id;
@@ -152,7 +152,7 @@ class AdminController extends ChangeNotifier {
   Future<int> removeAdmin(String username) async {
     _database = _adminModel.getConnection();
     _querySnapshot =
-        await _database.where("username", isEqualTo: username).get();
+    await _database.where("username", isEqualTo: username).get();
     _querySnapshot.docs.forEach((element) {
       _isAdminOnline = element.get("online");
       _idUser = element.id;
@@ -162,7 +162,7 @@ class AdminController extends ChangeNotifier {
     } else {
       _database = _sheetModel.getConnection();
       _querySnapshot =
-          await _database.where("sheetBy", isEqualTo: username).get();
+      await _database.where("sheetBy", isEqualTo: username).get();
       if (_querySnapshot.size > 0) {
         return 0;
       } else {
@@ -176,7 +176,7 @@ class AdminController extends ChangeNotifier {
   Future<int> removeStudent(String username) async {
     _database = _studentModel.getConnection();
     _querySnapshot =
-        await _database.where("username", isEqualTo: username).get();
+    await _database.where("username", isEqualTo: username).get();
     _querySnapshot.docs.forEach((element) {
       _idUser = element.id;
       _isStudentOnline = element.get("online");
@@ -186,7 +186,7 @@ class AdminController extends ChangeNotifier {
     } else {
       _database = _sheetModel.getConnection();
       _querySnapshot =
-          await _database.where("studentUsername", isEqualTo: username).get();
+      await _database.where("studentUsername", isEqualTo: username).get();
       if (_querySnapshot.size > 0) {
         _querySnapshot.docs.forEach((element) {
           _idSheet = element.id;
@@ -200,6 +200,35 @@ class AdminController extends ChangeNotifier {
         await _database.doc(_idUser).delete();
         return 1;
       }
+    }
+  }
+
+  Stream<QuerySnapshot> mySheets(String username) {
+    _database = _sheetModel.getConnection();
+    return _database.where("sheetBy", isEqualTo: username).snapshots();
+  }
+
+  Future<int> removeSheetAdmin(String usernameAdmin,
+      String usernameStudent) async {
+    _database = _studentModel.getConnection();
+    _querySnapshot =
+    await _database.where("username", isEqualTo: usernameStudent).get();
+    _querySnapshot.docs.forEach((element) {
+      _isStudentOnline = element.get("online");
+    });
+    if (_isStudentOnline == true) {
+      return -1;
+    }
+    else {
+      _database = _sheetModel.getConnection();
+      _querySnapshot =
+      await _database.where("sheetBy", isEqualTo: usernameAdmin).where(
+          "studentUsername", isEqualTo: usernameStudent).get();
+      _querySnapshot.docs.forEach((element) {
+        _idSheet = element.id;
+      });
+      await _database.doc(_idSheet).delete();
+      return 0;
     }
   }
 }

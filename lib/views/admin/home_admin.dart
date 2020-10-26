@@ -153,7 +153,12 @@ class _HomeAdminState extends State<HomeAdmin> {
   Widget drawerOfScaffold() {
     return Drawer(
       child: ListView(
-        children: [headerOfDrawer(), perfilAdmin(), logoutDrawerItem()],
+        children: [
+          headerOfDrawer(),
+          mySheets(),
+          perfilAdmin(),
+          logoutDrawerItem()
+        ],
       ),
     );
   }
@@ -166,6 +171,16 @@ class _HomeAdminState extends State<HomeAdmin> {
             textAlign: TextAlign.center,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
       ),
+    );
+  }
+
+  Widget mySheets() {
+    return ListTile(
+      title: Text("Minhas Fichas"),
+      trailing: FaIcon(FontAwesomeIcons.clipboardList),
+      onTap: () {
+        Routes().mySheets();
+      },
     );
   }
 
