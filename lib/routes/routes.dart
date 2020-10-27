@@ -104,4 +104,8 @@ class Routes {
   Future<dynamic> edtiStudent() {
     return navigator.pushNamed("/editStudent");
   }
+
+  Future<dynamic> successEditionStudent() async {
+    return navigator.popUntil(ModalRoute.withName("/perfilStudent"));
+  }
 }
