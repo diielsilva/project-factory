@@ -18,7 +18,9 @@ import 'package:new_prototype/views/admin/perfil_admin.dart';
 import 'package:new_prototype/views/admin/result_search_admin.dart';
 import 'package:new_prototype/views/admin/result_search_student.dart';
 import 'package:new_prototype/views/home_page.dart';
+import 'package:new_prototype/views/student/edit_student.dart';
 import 'package:new_prototype/views/student/home_student.dart';
+import 'package:new_prototype/views/student/perfil_student.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -51,7 +53,9 @@ void main() {
           GetPage(name: "/searchStudents", page: () => ResultSearchStudents()),
           GetPage(name: "/perfilAdmin", page: () => PerfilAdmin()),
           GetPage(name: "/editAdmin", page: () => EditAdmin()),
-          GetPage(name: "/mySheets", page: () => MySheets())
+          GetPage(name: "/mySheets", page: () => MySheets()),
+          GetPage(name: "/perfilStudent", page: () => PerfilStudent()),
+          GetPage(name: "/editStudent", page: () => EditStudent())
         ],
       ),
     ),

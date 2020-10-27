@@ -96,4 +96,12 @@ class Routes {
   Future<dynamic> mySheets() {
     return navigator.pushNamed("/mySheets");
   }
+
+  Future<dynamic> perfilStudent() {
+    return navigator.pushNamed("/perfilStudent");
+  }
+
+  Future<dynamic> edtiStudent() {
+    return navigator.pushNamed("/editStudent");
+  }
 }
