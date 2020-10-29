@@ -21,8 +21,10 @@ import 'package:new_prototype/views/admin/result_search_admin.dart';
 import 'package:new_prototype/views/admin/result_search_student.dart';
 import 'package:new_prototype/views/home_page.dart';
 import 'package:new_prototype/views/student/edit_student.dart';
+import 'package:new_prototype/views/student/group_list.dart';
 import 'package:new_prototype/views/student/home_student.dart';
 import 'package:new_prototype/views/student/perfil_student.dart';
+import 'package:new_prototype/views/student/type_of_train.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -59,7 +61,9 @@ void main() {
           GetPage(name: "/perfilStudent", page: () => PerfilStudent()),
           GetPage(name: "/editStudent", page: () => EditStudent()),
           GetPage(name: "/addSheet", page: () => AddSheet()),
-          GetPage(name: "/seeExercisesList", page: () => ExercisesList())
+          GetPage(name: "/seeExercisesList", page: () => ExercisesList()),
+          GetPage(name: "/groupList", page: () => GroupList()),
+          GetPage(name: "/typeWorkout", page: () => TypeOfTrain())
         ],
       ),
     ),

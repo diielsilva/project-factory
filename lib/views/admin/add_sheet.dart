@@ -445,27 +445,29 @@ class _AddSheetState extends State<AddSheet> {
   }
 
   Future<void> onLoading() async {
-    showDialog(context: context, barrierDismissible: false, child: AlertDialog(
-      title: Text("Carregando", textAlign: TextAlign.center),
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [CircularProgressIndicator()],
-      ),
-    ));
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        child: AlertDialog(
+          title: Text("Carregando", textAlign: TextAlign.center),
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [CircularProgressIndicator()],
+          ),
+        ));
 
     await Future.delayed(Duration(seconds: 5), () async {
       Routes().backOneRoute(true);
       StudentModel _studentModel =
-      Provider.of<StudentModel>(context, listen: false);
+          Provider.of<StudentModel>(context, listen: false);
       LoginController _loginController =
-      Provider.of<LoginController>(context, listen: false);
+          Provider.of<LoginController>(context, listen: false);
       _resultSaveExerciseList = await _adminController.saveSheetDatabase(
           _loginController.getCurrentUserOnline(),
           _studentModel.getUsername(),
           _adminController.getExercisesList());
     });
-
   }
 
   void resultSaveExercisesList(int result) {

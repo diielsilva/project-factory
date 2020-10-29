@@ -65,7 +65,9 @@ class _HomeStudentState extends State<HomeStudent> {
             ],
           ),
           color: Colors.deepOrange,
-          onPressed: () {},
+          onPressed: () {
+            Routes().groupList();
+          },
         ),
       ),
     );

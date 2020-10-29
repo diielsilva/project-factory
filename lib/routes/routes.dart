@@ -116,4 +116,12 @@ class Routes {
   Future<dynamic> seeExercisesList() {
     return navigator.pushNamed("/seeExercisesList");
   }
+
+  Future<dynamic> groupList() {
+    return navigator.pushNamed("/groupList");
+  }
+
+  Future<dynamic> typeOfWorkout() {
+    return navigator.pushNamed("/typeWorkout");
+  }
 }

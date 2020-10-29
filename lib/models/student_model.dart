@@ -6,9 +6,19 @@ class StudentModel extends ChangeNotifier {
   String _password;
   String _name;
   String _observations;
+  String _dayOfTraining;
   DateTime _dateInsertion;
   bool _isOnline;
   CollectionReference _collectionStudents;
+
+  void setDayOfTraining(String day) {
+    _dayOfTraining = day;
+    notifyListeners();
+  }
+
+  String getDayOfTraining() {
+    return _dayOfTraining;
+  }
 
   void setUsername(String username) {
     _username = username;

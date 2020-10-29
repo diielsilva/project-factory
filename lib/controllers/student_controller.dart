@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:new_prototype/models/sheet_model.dart';
 import 'package:new_prototype/models/student_model.dart';
 
 class StudentController extends ChangeNotifier {
+  SheetModel _sheetModel = SheetModel();
   StudentModel _studentModel = StudentModel();
   CollectionReference _database;
   QuerySnapshot _querySnapshot;
@@ -44,5 +46,10 @@ class StudentController extends ChangeNotifier {
         return 1;
       }
     }
+  }
+
+  Stream<QuerySnapshot> getExercisesOfSelectedStudent(String username) {
+    _database = _sheetModel.getConnection();
+    return _database.where("studentUsername", isEqualTo: username).snapshots();
   }
 }
