@@ -45,7 +45,10 @@ class _DetailsStudentState extends State<DetailsStudent> {
           usernameField(),
           nameField(),
           dividerFields(),
-          removeAdminButton()
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [removeAdminButton(), addSheetToStudent()],
+          )
         ],
       ),
     );
@@ -95,17 +98,41 @@ class _DetailsStudentState extends State<DetailsStudent> {
 
   Widget removeAdminButton() {
     return Padding(
-      padding: EdgeInsets.all(15),
+      padding: EdgeInsets.all(5),
       child: SizedBox(
-        width: 150,
+        width: 140,
+        height: 70,
         child: RaisedButton(
-          child: Row(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [Text("Remover"), FaIcon(FontAwesomeIcons.solidTrashAlt)],
           ),
           color: Colors.deepOrange,
           onPressed: () {
             confirmRemotion();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget addSheetToStudent() {
+    return Padding(
+      padding: EdgeInsets.all(5),
+      child: SizedBox(
+        width: 140,
+        height: 70,
+        child: RaisedButton(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text("Adicionar Treino"),
+              FaIcon(FontAwesomeIcons.dumbbell)
+            ],
+          ),
+          color: Colors.deepOrange,
+          onPressed: () {
+            Routes().addSheet();
           },
         ),
       ),

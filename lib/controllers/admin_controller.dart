@@ -17,6 +17,8 @@ class AdminController extends ChangeNotifier {
   SheetModel _sheetModel = SheetModel();
   bool _isAdminOnline;
   bool _isStudentOnline;
+  List<Map> _exercisesList = [];
+  List<Map> _auxExercisesList = [];
 
   Future<String> addAdmin(String username, String password, String name) async {
     _validateIfUserExists = await verifyIfUserExists(username, "admin");
@@ -38,6 +40,7 @@ class AdminController extends ChangeNotifier {
         "dateInsertion": _adminModel.getDateInsertion(),
         "keyWords": _keyWords,
       });
+      notifyListeners();
       _resultInsertion = _idInsertion.id;
       return _resultInsertion;
     }
@@ -47,12 +50,12 @@ class AdminController extends ChangeNotifier {
     if (typeOfUser == "admin") {
       _database = _adminModel.getConnection();
       _querySnapshot =
-      await _database.where("username", isEqualTo: username).get();
+          await _database.where("username", isEqualTo: username).get();
       return _querySnapshot.size;
     } else {
       _database = _studentModel.getConnection();
       _querySnapshot =
-      await _database.where("username", isEqualTo: username).get();
+          await _database.where("username", isEqualTo: username).get();
       return _querySnapshot.size;
     }
   }
@@ -124,7 +127,7 @@ class AdminController extends ChangeNotifier {
       return 0;
     } else {
       _querySnapshot =
-      await _database.where("username", isEqualTo: username).get();
+          await _database.where("username", isEqualTo: username).get();
       if (password.isEmpty && name.isNotEmpty) {
         _querySnapshot.docs.forEach((element) {
           _idUser = element.id;
@@ -152,7 +155,7 @@ class AdminController extends ChangeNotifier {
   Future<int> removeAdmin(String username) async {
     _database = _adminModel.getConnection();
     _querySnapshot =
-    await _database.where("username", isEqualTo: username).get();
+        await _database.where("username", isEqualTo: username).get();
     _querySnapshot.docs.forEach((element) {
       _isAdminOnline = element.get("online");
       _idUser = element.id;
@@ -162,7 +165,7 @@ class AdminController extends ChangeNotifier {
     } else {
       _database = _sheetModel.getConnection();
       _querySnapshot =
-      await _database.where("sheetBy", isEqualTo: username).get();
+          await _database.where("sheetBy", isEqualTo: username).get();
       if (_querySnapshot.size > 0) {
         return 0;
       } else {
@@ -176,7 +179,7 @@ class AdminController extends ChangeNotifier {
   Future<int> removeStudent(String username) async {
     _database = _studentModel.getConnection();
     _querySnapshot =
-    await _database.where("username", isEqualTo: username).get();
+        await _database.where("username", isEqualTo: username).get();
     _querySnapshot.docs.forEach((element) {
       _idUser = element.id;
       _isStudentOnline = element.get("online");
@@ -186,7 +189,7 @@ class AdminController extends ChangeNotifier {
     } else {
       _database = _sheetModel.getConnection();
       _querySnapshot =
-      await _database.where("studentUsername", isEqualTo: username).get();
+          await _database.where("studentUsername", isEqualTo: username).get();
       if (_querySnapshot.size > 0) {
         _querySnapshot.docs.forEach((element) {
           _idSheet = element.id;
@@ -208,27 +211,103 @@ class AdminController extends ChangeNotifier {
     return _database.where("sheetBy", isEqualTo: username).snapshots();
   }
 
-  Future<int> removeSheetAdmin(String usernameAdmin,
-      String usernameStudent) async {
+  Future<int> removeSheetAdmin(
+      String usernameAdmin, String usernameStudent) async {
     _database = _studentModel.getConnection();
     _querySnapshot =
-    await _database.where("username", isEqualTo: usernameStudent).get();
+        await _database.where("username", isEqualTo: usernameStudent).get();
     _querySnapshot.docs.forEach((element) {
       _isStudentOnline = element.get("online");
     });
     if (_isStudentOnline == true) {
       return -1;
-    }
-    else {
+    } else {
       _database = _sheetModel.getConnection();
-      _querySnapshot =
-      await _database.where("sheetBy", isEqualTo: usernameAdmin).where(
-          "studentUsername", isEqualTo: usernameStudent).get();
+      _querySnapshot = await _database
+          .where("sheetBy", isEqualTo: usernameAdmin)
+          .where("studentUsername", isEqualTo: usernameStudent)
+          .get();
       _querySnapshot.docs.forEach((element) {
         _idSheet = element.id;
       });
       await _database.doc(_idSheet).delete();
       return 0;
+    }
+  }
+
+  int addToExercisesList(String nameExercise, int seriesExercise,
+      String repetitionsExercise, String muscularGroup, String dayOfExercise) {
+    if (nameExercise.length < 3) {
+      return -1;
+    } else if (int.parse(repetitionsExercise) <= 0 || seriesExercise <= 0) {
+      return 0;
+    } else {
+      if (int.parse(repetitionsExercise) >= 100) {
+        repetitionsExercise = "Falha";
+      }
+      Map<dynamic, dynamic> map = {
+        "series": seriesExercise,
+        "nameExercise": nameExercise,
+        "repetitions": repetitionsExercise,
+        "muscularGroup": muscularGroup,
+        "dayOfExercise": dayOfExercise
+      };
+      _exercisesList.add(map);
+      print(_exercisesList);
+      return 1;
+    }
+  }
+
+  int resetExercisesList() {
+    if (_exercisesList.isEmpty) {
+      return 0;
+    } else {
+      _exercisesList = [];
+      notifyListeners();
+      return 1;
+    }
+  }
+
+  List<Map> getExercisesList() {
+    return _exercisesList;
+  }
+
+  List<Map> getAuxExercisesList() {
+    return _auxExercisesList;
+  }
+
+  void setAuxExerciseList(List<Map> exercises) {
+    _auxExercisesList = exercises;
+    notifyListeners();
+  }
+
+  Future<int> saveSheetDatabase(
+      String usernameAdmin, String usernameStudent, List<Map> exercises) async {
+    if (exercises.isEmpty) {
+      return 0;
+    } else {
+      _database = _sheetModel.getConnection();
+      _querySnapshot = await _database
+          .where("studentUsername", isEqualTo: usernameStudent)
+          .get();
+      if (_querySnapshot.size > 0) {
+        _querySnapshot.docs.forEach((element) {
+          _idSheet = element.id;
+        });
+        await _database.doc(_idSheet).update({
+          "sheetBy": usernameAdmin,
+          "studentUsername": usernameStudent,
+          "exercisesList": exercises
+        });
+        return 1;
+      } else {
+        await _database.add({
+          "sheetBy": usernameAdmin,
+          "studentUsername": usernameStudent,
+          "exercisesList": exercises
+        });
+        return 1;
+      }
     }
   }
 }
