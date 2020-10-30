@@ -67,7 +67,8 @@ class _TypeOfTrainState extends State<TypeOfTrain> {
     } else {
       for (int a = 0; a <= _listOfExercises.length; a++) {
         for (int b = 0; b < _listOfExercises.length; b++) {
-          if (_listOfExercises[b]["dayOfExercise"] != _dayOfExercise && _listOfExercises.length > 1) {
+          if (_listOfExercises[b]["dayOfExercise"] != _dayOfExercise &&
+              _listOfExercises.length > 1) {
             _listOfExercises.removeAt(b);
           }
         }

@@ -76,7 +76,7 @@ class _MySheetsState extends State<MySheets> {
             trailing: IconButton(
                 icon: FaIcon(FontAwesomeIcons.solidTrashAlt),
                 onPressed: () {
-                  onLoading(_currentUserOnline,
+                  validateForm(_currentUserOnline,
                       documents[index].get("studentUsername"));
                 }),
           );
@@ -102,6 +102,33 @@ class _MySheetsState extends State<MySheets> {
           usernameAdmin, usernameStudent);
       resultRemotion(_resultRemotion);
     });
+  }
+
+  Future<void> validateForm(String usernameAdmin, String usernameStudent) {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        child: AlertDialog(
+          title: Text("Confirmar Exclusão"),
+          content: Text("Deseja Mesmo Excluir a Ficha?"),
+          actions: [
+            FlatButton(
+              child: Text("Confirmar"),
+              textColor: Colors.blue,
+              onPressed: () {
+                Routes().backOneRoute(true);
+                onLoading(usernameAdmin, usernameStudent);
+              },
+            ),
+            FlatButton(
+              child: Text("Cancelar"),
+              textColor: Colors.red,
+              onPressed: () {
+                Routes().backOneRoute(true);
+              },
+            )
+          ],
+        ));
   }
 
   void resultRemotion(int result) {
