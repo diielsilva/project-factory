@@ -71,10 +71,13 @@ class AdminController extends ChangeNotifier {
     } else if (username.length < 3 ||
         name.length < 3 ||
         password.length < 3 ||
-        observations.length < 3) {
+        observations.length > 0 && observations.length < 3) {
       _resultInsertion = "errorSize";
       return _resultInsertion;
     } else {
+      if(observations.length == 0) {
+        observations = "Nenhuma Observação";
+      }
       _database = _studentModel.getConnection();
       _studentModel.setDateInsertion();
       _keyWords = name.toLowerCase().split(" ");
@@ -84,7 +87,8 @@ class AdminController extends ChangeNotifier {
         "name": name,
         "dateInsertion": _studentModel.getDateInsertion(),
         "online": false,
-        "keyWords": _keyWords
+        "keyWords": _keyWords,
+        "observations": observations
       });
       _resultInsertion = _idInsertion.id;
       return _resultInsertion;

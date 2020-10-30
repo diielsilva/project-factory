@@ -129,8 +129,7 @@ class _AddStudentState extends State<AddStudent> {
   Future<void> validateForm() async {
     if (_usernameController.text.isEmpty ||
         _passwordController.text.isEmpty ||
-        _nameController.text.isEmpty ||
-        _observationsController.text.isEmpty) {
+        _nameController.text.isEmpty) {
       errorEmptyFields();
     } else {
       await onLoading();
