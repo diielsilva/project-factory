@@ -75,7 +75,7 @@ class AdminController extends ChangeNotifier {
       _resultInsertion = "errorSize";
       return _resultInsertion;
     } else {
-      if(observations.length == 0) {
+      if (observations.length == 0) {
         observations = "Nenhuma Observação";
       }
       _database = _studentModel.getConnection();

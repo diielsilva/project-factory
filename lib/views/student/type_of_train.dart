@@ -16,6 +16,7 @@ class _TypeOfTrainState extends State<TypeOfTrain> {
   Stream<QuerySnapshot> _stream;
   List<dynamic> _listOfExercises;
   String _dayOfExercise;
+  List<dynamic> _auxListExercises = [];
 
   @override
   void initState() {
@@ -65,22 +66,24 @@ class _TypeOfTrainState extends State<TypeOfTrain> {
     if (_listOfExercises == null) {
       return Center(child: Text("Nenhum Exercício Encontrado"));
     } else {
-      for (int a = 0; a <= _listOfExercises.length; a++) {
-        for (int b = 0; b < _listOfExercises.length; b++) {
-          if (_listOfExercises[b]["dayOfExercise"] != _dayOfExercise &&
-              _listOfExercises.length > 1) {
-            _listOfExercises.removeAt(b);
-          }
+      for (int b = 0; b < _listOfExercises.length; b++) {
+        if (_listOfExercises[b]["dayOfExercise"] == _dayOfExercise) {
+          Map<dynamic, dynamic> map = {
+            "dayOfExercise": _listOfExercises[b]["dayOfExercise"],
+            "muscularGroup": _listOfExercises[b]["muscularGroup"],
+            "nameExercise": _listOfExercises[b]["nameExercise"],
+            "repetitions": _listOfExercises[b]["repetitions"],
+            "series": _listOfExercises[b]["series"]
+          };
+          _auxListExercises.add(map);
         }
       }
 
-      if (_listOfExercises.length == 1 &&
-          _listOfExercises[0]["dayOfExercise"] != _dayOfExercise) {
-        _listOfExercises = null;
+      if (_auxListExercises == null) {
         return Center(child: Text("Nenhum Exercício Encontrado"));
       } else {
         return ListView.builder(
-            itemCount: _listOfExercises.length,
+            itemCount: _auxListExercises.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding: EdgeInsets.all(10),
@@ -104,7 +107,7 @@ class _TypeOfTrainState extends State<TypeOfTrain> {
                           "Exercício: ",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        Text(_listOfExercises[index]["nameExercise"])
+                        Text(_auxListExercises[index]["nameExercise"])
                       ]),
                       Row(
                         children: [
@@ -112,7 +115,7 @@ class _TypeOfTrainState extends State<TypeOfTrain> {
                             "GP. Muscular: ",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          Text(_listOfExercises[index]["muscularGroup"])
+                          Text(_auxListExercises[index]["muscularGroup"])
                         ],
                       ),
                       Row(
@@ -121,7 +124,7 @@ class _TypeOfTrainState extends State<TypeOfTrain> {
                             "Nº Séries: ",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          Text(_listOfExercises[index]["series"].toString())
+                          Text(_auxListExercises[index]["series"].toString())
                         ],
                       ),
                       Row(
@@ -130,8 +133,8 @@ class _TypeOfTrainState extends State<TypeOfTrain> {
                             "Nº Repetições: ",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          Text(
-                              _listOfExercises[index]["repetitions"].toString())
+                          Text(_auxListExercises[index]["repetitions"]
+                              .toString())
                         ],
                       ),
                       Row(
@@ -140,7 +143,7 @@ class _TypeOfTrainState extends State<TypeOfTrain> {
                             "Dia do Exercício: ",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          Text(_listOfExercises[index]["dayOfExercise"])
+                          Text(_auxListExercises[index]["dayOfExercise"])
                         ],
                       )
                     ],
